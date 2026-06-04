@@ -42,6 +42,7 @@ The final narrative will follow the data — this hypothesis is a directional st
 ## Access Method Status
 
 - [x] BigQuery console access confirmed
+- [x] Google Cloud CLI and bq CLI configured and tested (project: gen-lang-client-0200890233)
 - [ ] Python `google-cloud-bigquery` connection tested
 - [ ] Service account / credentials configured
 
@@ -67,6 +68,8 @@ The final narrative will follow the data — this hypothesis is a directional st
 - [x] .gitignore created
 - [x] requirements.txt created
 - [x] Confirmed BigQuery sandbox access by successfully querying bigquery-public-data.thelook_ecommerce.orders and returning 125,408 orders.
+- [x] Configured Google Cloud CLI for project gen-lang-client-0200890233.
+- [x] Confirmed bq CLI access by querying bigquery-public-data.thelook_ecommerce.orders from terminal and returning 125,408 orders.
 
 ---
 
