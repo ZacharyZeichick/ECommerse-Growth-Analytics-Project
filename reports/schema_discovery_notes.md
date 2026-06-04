@@ -127,4 +127,34 @@
 
 ---
 
+## Null Checks and Modeling Implications
+
+| Table | Field | Rows | Nulls | Null % |
+|---|---|---|---|---|
+| events | user_id | 2,429,781 | 1,126,061 | 46.34% |
+| events | session_id | 2,429,781 | 0 | 0% |
+| events | created_at | 2,429,781 | 0 | 0% |
+| events | traffic_source | 2,429,781 | 0 | 0% |
+| events | event_type | 2,429,781 | 0 | 0% |
+| orders | order_id | 125,408 | 0 | 0% |
+| orders | user_id | 125,408 | 0 | 0% |
+| orders | created_at | 125,408 | 0 | 0% |
+| orders | status | 125,408 | 0 | 0% |
+| order_items | id | 181,815 | 0 | 0% |
+| order_items | user_id | 181,815 | 0 | 0% |
+| order_items | created_at | 181,815 | 0 | 0% |
+| order_items | status | 181,815 | 0 | 0% |
+| users | id | 100,000 | 0 | 0% |
+| users | created_at | 100,000 | 0 | 0% |
+| users | traffic_source | 100,000 | 0 | 0% |
+
+**Modeling implications:**
+
+- `events.user_id` is null for ~46% of event rows. Funnel analysis should primarily use `session_id` as the unit of analysis, not `user_id`.
+- Retention and customer-level revenue analysis should use `orders.user_id` and `order_items.user_id`, which are fully populated.
+- Joining event behavior to user-level outcomes will require care — `events.user_id` is incomplete and direct joins will drop nearly half of event records.
+- The null pattern in `events.user_id` resembles a realistic analytics environment where behavioral events are anonymous prior to purchase or account linkage.
+
+---
+
 *These are preliminary schema discovery notes. All findings are subject to revision as deeper analysis proceeds.*
