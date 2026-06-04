@@ -157,4 +157,22 @@
 
 ---
 
+## Traffic Source Modeling Decision
+
+Both `users.traffic_source` and `events.traffic_source` exist, but they do not map one-to-one. Users acquired through one channel generate events across multiple channels in subsequent sessions.
+
+**Field definitions for this project:**
+
+| Field | Interpretation |
+|---|---|
+| `users.traffic_source` | User acquisition source — the channel that originally brought the user |
+| `events.traffic_source` | Session/event traffic source — the channel for a specific session or event |
+
+**Usage rules:**
+- Acquisition, retention, and customer value analyses → use `users.traffic_source`
+- Funnel and session behavior analyses → use `events.traffic_source`
+- Any analysis involving traffic source must clearly state which field is being used
+
+---
+
 *These are preliminary schema discovery notes. All findings are subject to revision as deeper analysis proceeds.*
