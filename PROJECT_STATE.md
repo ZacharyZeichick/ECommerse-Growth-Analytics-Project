@@ -41,7 +41,7 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## Access Method Status
 
-- [ ] BigQuery console access confirmed
+- [x] BigQuery console access confirmed
 - [ ] Python `google-cloud-bigquery` connection tested
 - [ ] Service account / credentials configured
 
@@ -66,6 +66,7 @@ The final narrative will follow the data — this hypothesis is a directional st
 - [x] README.md created
 - [x] .gitignore created
 - [x] requirements.txt created
+- [x] Confirmed BigQuery sandbox access by successfully querying bigquery-public-data.thelook_ecommerce.orders and returning 125,408 orders.
 
 ---
 
