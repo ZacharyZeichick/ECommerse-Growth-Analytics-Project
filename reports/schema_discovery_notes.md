@@ -175,4 +175,51 @@ Both `users.traffic_source` and `events.traffic_source` exist, but they do not m
 
 ---
 
+## Acquisition Source and Revenue Viability Findings
+
+*Preliminary discovery findings. Not final conclusions.*
+
+### Revenue and Margin Viability
+
+| Field | Table | Rows | Nulls | Notes |
+|---|---|---|---|---|
+| sale_price | order_items | 181,815 | 0 | Range: $0.02–$999.00; avg $59.61 |
+| cost | products | 29,120 | 0 | Avg $28.48 |
+| retail_price | products | 29,120 | 0 | Avg $59.22 |
+
+- Revenue and estimated gross margin analysis are viable by joining `order_items.product_id` to `products.id`.
+- Some products/items have extremely low prices or costs — check for price outliers before drawing final margin conclusions.
+
+### Repeat Purchase Viability
+
+| Segment | Users | % of Purchasing Users |
+|---|---|---|
+| Total users with orders | 79,967 | — |
+| One-time buyers | 49,779 | 62.25% |
+| Repeat buyers | 30,188 | 37.75% |
+| Max orders per user | 4 | — |
+
+- 62.25% of purchasing users bought only once — one-time buyer reactivation is a viable growth opportunity.
+
+### Acquisition Source Findings
+
+| Source | Orders | Revenue | Repeat Buyer Rate | Est. Margin | Avg Order Value |
+|---|---|---|---|---|---|
+| Search | 87,337 | $7.53M | 37.71% | ~52.0% | ~$86–87 |
+| Organic | 18,925 | $1.65M | 37.67% | ~51.8% | ~$86–87 |
+| Facebook | — | — | 38.55% | ~51.8% | ~$86–87 |
+| Display | — | — | 37.85% | ~51.9% | ~$86–87 |
+| Email | — | — | 37.45% | ~51.8% | ~$86–87 |
+
+- Search dominates by volume; Organic is a distant second; Facebook, Email, and Display are much smaller.
+- Order outcome rates, repeat buyer rates, margin, and average order value are broadly similar across all acquisition sources.
+- Acquisition source explains volume differences more than customer quality, margin, or repeat purchasing behavior — based on this first pass.
+
+### Modeling Implication
+
+- Do not over-index the project narrative on traffic source differences unless later analysis reveals stronger variation.
+- Product/category mix, repeat purchasing, returns/cancellations, and fulfillment are likely more promising areas for identifying growth leakage.
+
+---
+
 *These are preliminary schema discovery notes. All findings are subject to revision as deeper analysis proceeds.*
