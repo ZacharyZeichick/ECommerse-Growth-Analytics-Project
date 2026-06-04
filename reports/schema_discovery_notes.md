@@ -283,4 +283,59 @@ Both `users.traffic_source` and `events.traffic_source` exist, but they do not m
 
 ---
 
+## Fulfillment and Post-Purchase Findings
+
+*Preliminary discovery findings. Not final conclusions.*
+
+### Fulfillment Timing by Order Status
+
+| Status | Avg Days to Ship | Avg Ship-to-Deliver | Avg Order-to-Deliver |
+|---|---|---|---|
+| Complete | 1.48 | 2.48 | 3.98 |
+| Returned | 1.49 | 2.48 | 3.99 |
+
+- Returned orders have nearly identical fulfillment timing to completed orders — delivery speed does not appear to drive returns.
+
+### Return Rate by Delivery Speed
+
+| Delivery Speed Bucket | Return Rate (Delivered Orders) |
+|---|---|
+| 0–2 days | 28.53% |
+| 3–6 days | 29.17% |
+| 7–13 days | 27.91% |
+
+- Return rates are stable across delivery speed buckets — no meaningful relationship between faster/slower delivery and return likelihood.
+
+### Distribution Center Performance
+
+- Average order-to-deliver time: 2.99–3.07 days across all centers.
+- Return rates: 9.9%–10.6%.
+- Cancellation rates: 14.6%–15.4%.
+- Distribution center performance is highly consistent — no center stands out as a fulfillment problem.
+
+### Product Category Fulfillment
+
+- Average order-to-deliver times range from approximately 2.88 to 3.10 days across categories.
+- Category fulfillment performance is consistent — no category shows a meaningful fulfillment disadvantage.
+
+### Implication
+
+- Fulfillment does not appear to be the primary growth leak in this dataset based on first-pass timing and outcome analysis.
+- The logistics/post-purchase angle should be treated as supporting analysis rather than the main project recommendation, unless later analysis finds stronger signal.
+
+---
+
+## Emerging Phase 1 Synthesis
+
+*Directional synthesis based on discovery findings. Subject to revision.*
+
+- **Acquisition source** explains volume differences more than customer quality, funnel efficiency, order outcomes, or margin.
+- **Funnel conversion rates** by session traffic source are very similar across all channels.
+- **Order outcome rates** by acquisition source are very similar.
+- **Fulfillment timing and post-purchase outcomes** are broadly stable across channels, distribution centers, and categories.
+- **Product/category mix** shows the strongest signal so far — meaningful variation in revenue, estimated gross margin, and first-purchase customer lifetime value.
+- The project narrative is shifting toward **revenue quality, product mix, and one-time buyer reactivation** rather than fixing a single underperforming traffic source or fulfillment bottleneck.
+
+---
+
 *These are preliminary schema discovery notes. All findings are subject to revision as deeper analysis proceeds.*
