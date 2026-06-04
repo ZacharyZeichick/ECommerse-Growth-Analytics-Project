@@ -1,0 +1,59 @@
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data (never commit raw data)
+data/
+*.csv
+*.json
+*.parquet
+*.feather
+*.pkl
+*.pickle
+
+# Outputs — exclude large/generated files
+outputs/tableau/*.hyper
+outputs/tableau/*.csv
+outputs/tableau/*.tde
+
+# Tableau
+*.twbx
+*.twb
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Credentials and secrets
+*.pem
+*.key
+service_account*.json
+credentials*.json
+token*.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
