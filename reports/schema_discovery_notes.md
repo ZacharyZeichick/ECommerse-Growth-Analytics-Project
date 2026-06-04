@@ -222,4 +222,65 @@ Both `users.traffic_source` and `events.traffic_source` exist, but they do not m
 
 ---
 
+## Product Category and Customer Value Findings
+
+*Preliminary discovery findings. Not final conclusions.*
+
+### Category Revenue and Margin
+
+| Category | Revenue | Est. Margin |
+|---|---|---|
+| Outerwear & Coats | $1.33M | 55.49% |
+| Jeans | $1.27M | 46.51% |
+| Blazers & Jackets | — | 62.21% |
+| Skirts | — | 60.23% |
+| Accessories | — | 59.94% |
+| Suits & Sport Coats | — | 59.85% |
+| Socks & Hosiery | — | 59.72% |
+| Tops & Tees | — | 43.99% |
+| Leggings | — | 40.02% |
+| Socks | — | 39.71% |
+| Suits | — | 39.63% |
+
+- Revenue leaders are not always margin leaders — Jeans is second in revenue but near the bottom in margin.
+- Category shows meaningfully stronger variation in revenue and margin than acquisition source does.
+
+### Category Outcome Rates
+
+- Return rates are broadly stable across categories at approximately 10%.
+- Cancellation rates are broadly stable at approximately 14–16%.
+- Product category does not appear to strongly explain returns or cancellations — those appear to be more uniform phenomena.
+
+### First-Purchase Category and Repeat Behavior
+
+- First-purchase category repeat buyer rates mostly fall in the 36–39% range.
+- Highest repeat rates: Leggings 39.47%, Pants & Capris 39.37%, Suits & Sport Coats 39.16%.
+- Lowest repeat rate (among categories with 500+ first-time buyers): Suits at 33.88%.
+- The relationship between first-purchase category and repeat purchasing is modest. Do not claim category causes retention.
+
+### First-Purchase Category and Lifetime Customer Value
+
+| First-Purchase Category | Avg Lifetime Revenue | Avg Lifetime Margin |
+|---|---|---|
+| Outerwear & Coats | $240.15 | $130.23 |
+| Suits & Sport Coats | $223.61 | $126.51 |
+| Blazers & Jackets | $181.99 | $106.00 |
+| Intimates | — | $46.09 |
+| Underwear | — | $44.44 |
+| Leggings | — | $41.35 |
+| Socks | — | $37.25 |
+| Socks & Hosiery | — | $33.97 |
+
+- The gap is large: Outerwear & Coats first-purchase customers generate nearly 4x the average lifetime margin of Socks & Hosiery first-purchase customers.
+- Frame as association, not causation — customer demographics and intent likely co-vary with first-purchase category.
+
+### Emerging Strategic Implications
+
+- Acquisition source explains volume differences more than customer quality or revenue quality.
+- Product/category mix is more important for revenue quality, margin, and downstream customer value.
+- Potential experiment: test whether merchandising higher-margin, higher-LTV categories to new users increases first-order gross margin and downstream customer value.
+- Secondary experiment idea: personalized reactivation campaign targeting one-time buyers (62.25% of purchasing users).
+
+---
+
 *These are preliminary schema discovery notes. All findings are subject to revision as deeper analysis proceeds.*
