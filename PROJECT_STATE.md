@@ -7,7 +7,9 @@
 
 ## Current Phase
 
-**Phase 0 — Project Setup** (in progress)
+**Phase 1 — Dataset Access & Schema Discovery** (complete)
+
+Next phase: **Phase 2 — Core Business Metrics**
 
 ---
 
@@ -95,6 +97,17 @@ The final narrative will follow the data — this hypothesis is a directional st
 - Are cost/margin fields available in the dataset, or will analysis be revenue-only?
 - What date range does the dataset cover? (Need to confirm before cohort analysis)
 - Are traffic source / channel fields populated in the `events` table?
+
+---
+
+## Current Workflow
+
+- Claude Code / terminal is the main build environment.
+- Use the BigQuery CLI to run saved SQL queries when practical.
+- The BigQuery website can be used for quick inspection or debugging, but is not the default workflow.
+- SQL should live in the repo before being used for repeatable analysis.
+- Query outputs that are part of project deliverables should be saved to `outputs/tables/`.
+- Use ChatGPT for analysis direction, interpretation, and narrative decisions.
 
 ---
 
