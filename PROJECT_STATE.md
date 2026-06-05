@@ -1,15 +1,15 @@
 # Project State — E-Commerce Growth Analytics
 
 *Living handoff document. Update this file at the end of every working session.*
-*Last updated: 2026-06-04*
+*Last updated: 2026-06-05*
 
 ---
 
 ## Current Phase
 
-**Phase 1 — Dataset Access & Schema Discovery** (complete)
+**Phase 2 — Core Business Metrics** (visualization pass complete)
 
-Next phase: **Phase 2 — Core Business Metrics**
+Next planned focus: **Product Value Analysis**
 
 ---
 
@@ -48,6 +48,8 @@ The final narrative will follow the data — this hypothesis is a directional st
 - [ ] Python `google-cloud-bigquery` connection tested
 - [ ] Service account / credentials configured
 
+*Note: bq CLI is the working export path for now. Python BigQuery connection not yet tested.*
+
 ---
 
 ## Key Decisions Made
@@ -81,22 +83,36 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ---
 
+## Phase 2 — Core Business Metrics (Complete)
+
+- [x] `sql/02_core_business_metrics.sql` created and committed
+- [x] `scripts/run_core_business_metrics.ps1` created and committed
+- [x] Core metric CSV outputs generated in `outputs/tables/`
+  - `overall_business_summary.csv`
+  - `monthly_business_metrics.csv`
+  - `category_business_metrics.csv`
+  - `customer_purchase_summary.csv`
+  - `order_status_rates.csv`
+- [x] `src/create_core_metric_charts.py` created and committed
+- [x] Five core metric charts generated and committed in `outputs/figures/`
+  - `monthly_gross_vs_net_revenue.png`
+  - `top_categories_by_gross_revenue.png`
+  - `top_categories_by_net_margin_pct.png`
+  - `buyer_repeat_split.png`
+  - `order_status_distribution.png`
+
+---
+
 ## Next Actions
 
-1. Confirm BigQuery access (console and/or Python)
-2. Run schema exploration queries across all key tables
-3. Document row counts, date ranges, null rates, and key cardinality
-4. Define and document the core metric set (conversion rate, LTV, repeat rate, return rate)
-5. Create initial SQL exploration queries after BigQuery access is confirmed
+1. Begin Product Value Analysis (next planned focus)
 
 ---
 
 ## Open Questions
 
-- Is BigQuery access available via service account or ADC (Application Default Credentials)?
-- Are cost/margin fields available in the dataset, or will analysis be revenue-only?
-- What date range does the dataset cover? (Need to confirm before cohort analysis)
-- Are traffic source / channel fields populated in the `events` table?
+- Are traffic source / channel fields in the `events` table useful for segmentation (known ~no variation by channel in funnel rates)?
+- Cohort analysis date range: dataset runs 2019–2026 with partial June 2026 data (exclude last 30–60 days for outcome-dependent metrics)
 
 ---
 
