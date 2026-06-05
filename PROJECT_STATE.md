@@ -1,15 +1,15 @@
 # Project State — E-Commerce Growth Analytics
 
 *Living handoff document. Update this file at the end of every working session.*
-*Last updated: 2026-06-05 (post local data workflow audit)*
+*Last updated: 2026-06-05 (post product value analysis)*
 
 ---
 
 ## Current Phase
 
-**Local data workflow validated — ready for analysis**
+**Product / Customer Value Analysis complete**
 
-Next planned focus: **Local DuckDB Product / Customer Value Analysis**
+Next planned focus: **Acquisition or Conversion analysis** — confirm direction with ChatGPT framing before starting
 
 ---
 
@@ -83,6 +83,31 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ---
 
+## Phase 3 — Product / Customer Value Analysis (Complete)
+
+- [x] `src/build_product_value_analysis.py` created and committed — DuckDB queries against `data/processed/`, writes 5 output CSVs
+- [x] Five product value CSVs generated in `outputs/tables/`
+  - `product_category_value_ranking.csv` — 26 categories, revenue/margin/return/cancellation by category
+  - `product_revenue_margin_quadrant.csv` — compact scatter dataset (net revenue, margin %, buyers)
+  - `first_purchase_category_customer_value.csv` — LTV by first-purchase category (repeat rate, avg lifetime margin)
+  - `first_vs_post_first_order_value.csv` — first vs post-first order margin split per first-purchase category
+  - `product_category_recommendations.csv` — strategic role classification and recommendation note per category
+- [x] `src/create_product_value_charts.py` created and committed — four portfolio charts
+- [x] Four product value charts generated and committed in `outputs/figures/`
+  - `first_vs_post_first_order_margin.png`
+  - `lifetime_margin_vs_repeat_rate.png`
+  - `revenue_margin_quadrant.png`
+  - `strategic_role_counts.png`
+
+**Key findings:**
+- Repeat buyer rate is flat at ~37–39% across all 26 categories — repeat behavior is platform-level, not category-driven
+- High-LTV categories (Outerwear & Coats $99, Suits & Sport Coats $93) are front-loaded: ~80% of lifetime margin comes from the first order
+- Low-ticket replenishment categories (Socks, Underwear) have the most post-first durability (61–74% of LTV post-first) but very low absolute LTV
+- Jeans is the largest margin leak: #2 in revenue ($949K) but 5+ points below average margin at 46.5%
+- Blazers & Jackets is the highest-margin category (62.1%) but underscaled
+
+---
+
 ## Local Data Workflow Setup (Complete)
 
 - [x] Switched project workflow from BigQuery CLI to local Python/DuckDB
@@ -120,7 +145,7 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## Next Actions
 
-1. Begin Product / Customer Value Analysis using local DuckDB against `data/processed/`
+1. Confirm next analysis phase with ChatGPT framing (Acquisition or Conversion)
 2. New analysis scripts go in `src/` and query `data/processed/` — do not use BigQuery or PowerShell export scripts
 3. Outputs go to `outputs/tables/` (CSV) and `outputs/figures/` (PNG) as before
 
