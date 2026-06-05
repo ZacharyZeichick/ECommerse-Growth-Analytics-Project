@@ -48,7 +48,7 @@ The final narrative will follow the data — this hypothesis is a directional st
 - [ ] Python `google-cloud-bigquery` connection tested
 - [ ] Service account / credentials configured
 
-*Note: bq CLI is the working export path for now. Python BigQuery connection not yet tested.*
+*Note: Project is transitioning to a local raw data workflow (see Current Workflow). BigQuery remains the authoritative source dataset; raw tables will be downloaded once into `data/raw/` and queried locally via Python/DuckDB for all future analysis.*
 
 ---
 
@@ -118,12 +118,17 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## Current Workflow
 
-- Claude Code / terminal is the main build environment.
-- Use the BigQuery CLI to run saved SQL queries when practical.
-- The BigQuery website can be used for quick inspection or debugging, but is not the default workflow.
-- SQL should live in the repo before being used for repeatable analysis.
-- Query outputs that are part of project deliverables should be saved to `outputs/tables/`.
-- Use ChatGPT for analysis direction, interpretation, and narrative decisions.
+**As of 2026-06-05 the project has switched to a local raw data workflow.**
+
+Reason: repeated terminal crashes and friction during BigQuery CLI exports made the prior bq-CLI-based workflow unreliable. The new approach downloads each raw table once and queries locally, making the workflow faster and fully reproducible without repeated cloud queries.
+
+- **Data source:** BigQuery (`bigquery-public-data.thelook_ecommerce`) — authoritative, but queried only to download raw tables.
+- **Raw data:** Downloaded once into `data/raw/` (one file per table, e.g. Parquet or CSV). `data/` is Git-ignored and never committed.
+- **Local query engine:** Python + DuckDB. All analysis SQL runs against local files in `data/raw/` and `data/processed/`.
+- **BigQuery CLI / console:** No longer the default analysis path. Used only if a new raw table needs to be pulled.
+- **SQL files in `sql/`:** Retained as reference and documentation. New analysis queries will target local DuckDB.
+- **Outputs:** Results that are part of project deliverables continue to be saved to `outputs/tables/` and `outputs/figures/`.
+- **Direction and narrative:** ChatGPT for framing and interpretation; Claude Code for implementation.
 
 ---
 
