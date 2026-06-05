@@ -1,15 +1,15 @@
 # Project State — E-Commerce Growth Analytics
 
 *Living handoff document. Update this file at the end of every working session.*
-*Last updated: 2026-06-05 (post product value analysis)*
+*Last updated: 2026-06-05 (initial funnel analysis outputs)*
 
 ---
 
 ## Current Phase
 
-**Product / Customer Value Analysis complete**
+**Conversion / Funnel Analysis — in progress**
 
-Next planned focus: **Acquisition or Conversion analysis** — confirm direction with ChatGPT framing before starting
+Initial output tables generated. Next step: create funnel charts and decide whether to investigate cart-to-purchase drop-off or post-purchase returns/cancellations deeper.
 
 ---
 
@@ -79,7 +79,23 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## In-Progress Work
 
-- Nothing currently in progress
+### Phase 4 — Conversion / Funnel Analysis (started)
+
+- [x] `src/build_funnel_analysis.py` created and committed — DuckDB queries against events, orders, order_items, products
+- [x] Four funnel output CSVs generated in `outputs/tables/` (gitignored, local only)
+  - `funnel_by_traffic_source.csv` — 5 rows, session funnel metrics by traffic source
+  - `event_type_distribution.csv` — 6 rows, event counts and % of total
+  - `session_purchase_summary.csv` — 1 row, overall session purchase rate
+  - `high_value_category_funnel.csv` — 2 rows, Revenue leader vs other session funnel comparison
+- [ ] Funnel charts not yet created
+- [ ] Cart-to-purchase drop-off analysis not yet done
+- [ ] Post-purchase returns/cancellations analysis not yet done
+
+**Key findings so far:**
+- Session purchase rate: **26.4%–27.0%** across all five traffic sources — conversion rates are nearly identical regardless of channel
+- Revenue leader category sessions convert at **26.59%**, essentially the same as other sessions at **26.68%** — high-value categories generate more margin through purchase price, not through better conversion
+- Cart-to-purchase rate is ~**42%** across all sources — the cart-to-purchase drop-off (~58%) is the most significant funnel leak
+- **Data caveat:** every session in the events table contains at least one product-page event, so `browse_sessions = total_sessions` for all sources. The browse-to-cart metric reflects cart eligibility rather than true top-of-funnel drop-off. Meaningful funnel is: sessions → cart → purchase.
 
 ---
 
@@ -145,9 +161,10 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## Next Actions
 
-1. Confirm next analysis phase with ChatGPT framing (Acquisition or Conversion)
-2. New analysis scripts go in `src/` and query `data/processed/` — do not use BigQuery or PowerShell export scripts
-3. Outputs go to `outputs/tables/` (CSV) and `outputs/figures/` (PNG) as before
+1. Create funnel charts (`src/create_funnel_charts.py`) — visualize the flat-funnel finding across traffic sources and the cart-to-purchase drop-off
+2. Decide with ChatGPT framing whether to go deeper on cart-to-purchase abandonment or pivot to post-purchase returns/cancellations analysis
+3. New analysis scripts go in `src/` and query `data/processed/` — do not use BigQuery or PowerShell export scripts
+4. Outputs go to `outputs/tables/` (CSV) and `outputs/figures/` (PNG) as before
 
 ---
 
