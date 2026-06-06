@@ -72,3 +72,18 @@ Before doing anything else:
 - **This tool (Claude Code):** Implementation — writing SQL, Python, notebooks; executing code; saving outputs; managing files.
 - **ChatGPT:** Framing — hypothesis generation, narrative structure, business interpretation.
 - Do not make major analytical or narrative decisions without prior direction from the user or ChatGPT framing.
+
+---
+
+## Default Working Rules
+
+These rules apply in every session unless the user explicitly overrides them.
+
+- At the start of every session or new task, read `PROJECT_STATE.md` first.
+- Use `PROJECT_STATE.md` as the source of truth for current phase, workflow, and next steps.
+- Unless explicitly told otherwise, do not use BigQuery.
+- Unless explicitly told otherwise, do not use PowerShell export scripts.
+- Do not modify files outside the requested scope.
+- Review created or modified code before running it.
+- Do not run newly created scripts unless the user explicitly says to run them.
+- Use local Python/DuckDB against `data/processed/` for all analysis.
