@@ -23,6 +23,7 @@ Dataset: [theLook eCommerce](https://console.cloud.google.com/marketplace/produc
 | Post-purchase loss | Complete | 3 charts | 15% cancel rate, 10% return rate — flat across all categories, order value bands, and customer types; structural platform problem |
 | Margin mix scenarios | Complete | Growth lever scorecard; 4 CSVs | Cart-to-purchase conversion is the highest-upside lever (~$68K/yr annualized); pure margin mix shift has smaller upside than expected (~$4.6K/yr for a 10% shift) |
 | A/B test design | Complete | 3 experiment CSVs | Cart abandonment recovery is top-priority; one-time buyer reactivation is second; cancellation work starts with reason-capture instrumentation |
+| Unit economics waterfall | Complete | 1 waterfall chart | Gross revenue of $10.86M becomes $4.23M estimated net margin after cancellations, returns, and estimated product cost |
 | Tableau / dashboard | Not started | — | Visual portfolio layer |
 | Final review / defense | Not started | — | Defender + critic + reconciliation passes before final polish |
 
