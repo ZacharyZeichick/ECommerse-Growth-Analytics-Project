@@ -1,15 +1,15 @@
 # Project State — E-Commerce Growth Analytics
 
 *Living handoff document. Update this file at the end of every working session.*
-*Last updated: 2026-06-05 (margin mix scenario analysis complete)*
+*Last updated: 2026-06-05 (A/B test design complete)*
 
 ---
 
 ## Current Phase
 
-**Margin Mix Scenario Analysis — complete. Next: PROJECT_PROGRESS.md and A/B test recommendations.**
+**A/B Test Design — complete. Next: Unit Economics Waterfall and RFM Customer Segmentation.**
 
-Growth lever scorecard completed across five lever types. Cart-to-purchase conversion is the highest-upside lever; margin mix shift has much smaller upside than expected.
+Four experiment designs grounded in the growth lever scorecard. Cart abandonment recovery is the top-priority experiment; cancellation reason capture is instrumentation-first due to missing root-cause data.
 
 ---
 
@@ -74,6 +74,23 @@ The final narrative will follow the data — this hypothesis is a directional st
 - [x] Confirmed BigQuery sandbox access by successfully querying bigquery-public-data.thelook_ecommerce.orders and returning 125,408 orders.
 - [x] Configured Google Cloud CLI for project gen-lang-client-0200890233.
 - [x] Confirmed bq CLI access by querying bigquery-public-data.thelook_ecommerce.orders from terminal and returning 125,408 orders.
+
+---
+
+## Phase 7 — A/B Test Design (Complete)
+
+- [x] `src/build_experiment_recommendations.py` created and committed — reads growth_lever_scorecard.csv, funnel_by_traffic_source.csv, first_purchase_category_customer_value.csv, post_purchase_summary.csv; writes three experiment CSVs
+- [x] Three experiment CSVs generated in `outputs/tables/` (gitignored, local only)
+  - `experiment_designs.csv` — 4 rows × 18 columns; full experiment design per experiment (hypothesis, segment, control, treatment, primary metric, guardrail metrics, upside, confidence, caveats)
+  - `experiment_priority_matrix.csv` — 4 rows; compact ranking view with recommended launch order, effort, and learning value
+  - `experiment_metric_definitions.csv` — 13 rows; deduplicated metric definitions (4 primary, 9 guardrail) with measurement windows and data sources
+
+**Key findings:**
+- **EXP-001 Cart abandonment recovery** is the top-priority experiment: highest annualized margin upside (+1pp = $13,605/yr), high feasibility, email infrastructure likely already in place
+- **EXP-002 One-time buyer reactivation** is the second priority: meaningful upside (+5% repeat orders = $10,384/yr), high feasibility, directly addresses the ~62.5% one-time buyer finding
+- **EXP-004 Cancellation reason capture** should be treated as instrumentation first — root cause of the 15% cancellation rate is not captured anywhere in the dataset; Phase A (reason collection) must precede any intervention design
+- **EXP-003 High-margin category merchandising** is lower ROI (~$456/yr for a 1% mix shift) but valuable as a demand-elasticity learning test; primary value is the finding, not the margin impact
+- Several guardrail metrics (email unsubscribe rate, revenue per email sent, customer contact rate) require new instrumentation not present in the current dataset
 
 ---
 
@@ -201,8 +218,8 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## Next Actions
 
-1. Create `PROJECT_PROGRESS.md` — a human-readable summary of all phases, findings, and recommendations for portfolio readers
-2. Design A/B test recommendations — detailed experiment designs grounded in the scorecard findings
+1. Unit Economics Waterfall and RFM Customer Segmentation
+2. Create `PROJECT_PROGRESS.md` — a human-readable summary of all phases, findings, and recommendations for portfolio readers
 3. Begin Final Review and Project Defense (see phase below)
 
 ---
