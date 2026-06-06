@@ -22,7 +22,7 @@ Dataset: [theLook eCommerce](https://console.cloud.google.com/marketplace/produc
 | Funnel analysis | Complete | 3 charts | ~26.5% session-purchase rate flat across all 5 channels; 58% cart abandonment is the primary conversion leak |
 | Post-purchase loss | Complete | 3 charts | 15% cancel rate, 10% return rate — flat across all categories, order value bands, and customer types; structural platform problem |
 | Margin mix scenarios | Complete | Growth lever scorecard; 4 CSVs | Cart-to-purchase conversion is the highest-upside lever (~$68K/yr annualized); pure margin mix shift has smaller upside than expected (~$4.6K/yr for a 10% shift) |
-| A/B test design | Not started | — | Design experiments grounded in scorecard findings |
+| A/B test design | Complete | 3 experiment CSVs | Cart abandonment recovery is top-priority; one-time buyer reactivation is second; cancellation work starts with reason-capture instrumentation |
 | Tableau / dashboard | Not started | — | Visual portfolio layer |
 | Final review / defense | Not started | — | Defender + critic + reconciliation passes before final polish |
 
