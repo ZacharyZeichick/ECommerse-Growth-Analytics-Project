@@ -12,6 +12,22 @@ Dataset: [theLook eCommerce](https://console.cloud.google.com/marketplace/produc
 
 ---
 
+## Project Status
+
+| Workstream | Status | Assets | Key Finding / Next Step |
+|---|---|---|---|
+| Data workflow | Complete | 7 processed tables; local DuckDB pipeline | No repeated cloud queries; all analysis runs against `data/processed/` |
+| Core business metrics | Complete | 5 charts | ~25% order loss rate (cancel + return); 37.7% repeat buyer rate |
+| Product / customer value | Complete | 4 charts | Jeans is the largest margin leak; Blazers & Jackets is highest-margin and underscaled |
+| Funnel analysis | Complete | 3 charts | ~26.5% session-purchase rate flat across all 5 channels; 58% cart abandonment is the primary conversion leak |
+| Post-purchase loss | Complete | 3 charts | 15% cancel rate, 10% return rate — flat across all categories, order value bands, and customer types; structural platform problem |
+| Margin mix scenarios | Complete | Growth lever scorecard; 4 CSVs | Cart-to-purchase conversion is the highest-upside lever (~$68K/yr annualized); pure margin mix shift has smaller upside than expected (~$4.6K/yr for a 10% shift) |
+| A/B test design | Not started | — | Design experiments grounded in scorecard findings |
+| Tableau / dashboard | Not started | — | Visual portfolio layer |
+| Final review / defense | Not started | — | Defender + critic + reconciliation passes before final polish |
+
+---
+
 ## Tools & Workflow
 
 | Tool | Role |
@@ -117,16 +133,3 @@ Summary of how the 26 categories distribute across strategic roles based on reve
 
 > `data/` is git-ignored. Raw and processed CSVs live locally only.
 
----
-
-## Status
-
-| Phase | Status |
-|-------|--------|
-| Project setup | Complete |
-| Core business metrics | Complete |
-| Product / customer value analysis | Complete |
-| Acquisition analysis | Planned |
-| Conversion funnel analysis | Planned |
-| Retention / cohort analysis | Planned |
-| Fulfillment analysis | Planned |
