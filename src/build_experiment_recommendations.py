@@ -63,6 +63,7 @@ def load_inputs() -> dict:
     funnel      = read_csv("funnel_by_traffic_source.csv")
     ltv         = read_csv("first_purchase_category_customer_value.csv")
     pp          = read_csv("post_purchase_summary.csv")[0]
+    cust        = read_csv("customer_purchase_summary.csv")[0]
 
     # Funnel aggregates
     total_cart      = sum(int(r["cart_sessions"])     for r in funnel)
@@ -79,11 +80,11 @@ def load_inputs() -> dict:
     total_items  = int(pp["total_items"])
     cancel_items = round(total_items * cancel_rate / 100)
 
-    # Repeat buyer rate (unweighted average across LTV categories)
-    avg_repeat_rate = round(
-        sum(float(r["repeat_buyer_rate"]) for r in ltv) / len(ltv), 1
-    )
-    one_time_pct = round(100 - avg_repeat_rate, 1)
+    # Platform repeat buyer rate — weighted, derived from actual buyer counts
+    _repeat  = int(cust["repeat_buyers"])
+    _total   = _repeat + int(cust["one_time_buyers"])
+    avg_repeat_rate = round(_repeat / _total * 100, 1)
+    one_time_pct    = round(int(cust["one_time_buyers"]) / _total * 100, 1)
 
     # Upside values from scorecard — match on lever_type + lever name fragment.
     # Using lever fragments rather than scenario strings to avoid special-character

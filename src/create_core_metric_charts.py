@@ -31,8 +31,8 @@ ax.plot(df_monthly["order_month"], df_monthly["gross_revenue"], label="Gross Rev
 ax.plot(df_monthly["order_month"], df_monthly["net_revenue"], label="Net Revenue", linewidth=1.5)
 ax.set_title("Monthly Gross vs. Net Revenue (2019–2026)", fontsize=14, pad=12)
 ax.set_xlabel("Month")
-ax.set_ylabel("Revenue ($)")
-ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x:,.0f}"))
+ax.set_ylabel("Revenue")
+ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x / 1_000:.0f}K"))
 ax.xaxis.set_major_locator(mdates.YearLocator())
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
 plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
@@ -97,11 +97,13 @@ bars = ax.bar(labels, values)
 ax.set_title("Buyer Segmentation: One-Time vs. Repeat Buyers", fontsize=14, pad=12)
 ax.set_ylabel("Number of Buyers")
 ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"{x:,.0f}"))
+total = sum(values)
 for bar, value in zip(bars, values):
+    pct = value / total * 100
     ax.text(
         bar.get_x() + bar.get_width() / 2,
         bar.get_height() + 400,
-        f"{value:,}",
+        f"{value:,}\n({pct:.1f}%)",
         ha="center", va="bottom", fontsize=11
     )
 plt.tight_layout()

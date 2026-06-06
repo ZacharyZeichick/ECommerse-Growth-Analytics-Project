@@ -4,6 +4,8 @@
 
 Dataset: [theLook eCommerce](https://console.cloud.google.com/marketplace/product/bigquery-public-data/thelook-ecommerce) (Google BigQuery public dataset) — 125,408 orders, 100,000 users, 29,120 products.
 
+> **Note on the dataset:** theLook eCommerce is a synthetic dataset. Revenue figures and trends reflect how the dataset was constructed, not observed real-world business performance. In particular, the accelerating revenue growth visible in 2025–2026 is a property of the synthetic data, not evidence of a real business event.
+
 ---
 
 ## Core Business Question
@@ -25,7 +27,7 @@ Dataset: [theLook eCommerce](https://console.cloud.google.com/marketplace/produc
 | A/B test design | Complete | 3 experiment CSVs | Cart abandonment recovery is top-priority; one-time buyer reactivation is second; cancellation work starts with reason-capture instrumentation |
 | Unit economics waterfall | Complete | 1 waterfall chart | Gross revenue of $10.86M becomes $4.23M estimated net margin after cancellations, returns, and estimated product cost |
 | Tableau / dashboard | Not started | — | Visual portfolio layer |
-| Final review / defense | Not started | — | Defender + critic + reconciliation passes before final polish |
+| Final review / defense | In progress | — | Defender + critic + reconciliation passes before final polish |
 
 ---
 
@@ -39,6 +41,60 @@ Dataset: [theLook eCommerce](https://console.cloud.google.com/marketplace/produc
 | GitHub | Version control and portfolio presentation |
 
 Raw tables are downloaded once from BigQuery into `data/` (git-ignored) and queried locally via DuckDB — no repeated cloud queries needed.
+
+---
+
+## Reproducing This Project
+
+**Prerequisites:** Python 3.10+, a Google Cloud project with BigQuery access to `bigquery-public-data.thelook_ecommerce`.
+
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Download the 7 raw tables from BigQuery into data/raw/
+#    Tables: orders, order_items, users, products, events,
+#            inventory_items, distribution_centers
+#    Export each as CSV from the BigQuery console or bq CLI.
+
+# 3. Clean encoding and validate
+python src/clean_raw_csv_encoding.py
+python src/validate_raw_data.py
+
+# 4. Core business metric CSVs (Phase 2)
+#    Run sql/02_core_business_metrics.sql in BigQuery and download
+#    the 5 result CSVs into outputs/tables/:
+#      overall_business_summary.csv, monthly_business_metrics.csv,
+#      category_business_metrics.csv, customer_purchase_summary.csv,
+#      order_status_rates.csv
+python src/create_core_metric_charts.py
+
+# 5. Product / customer value analysis
+python src/build_product_value_analysis.py
+python src/create_product_value_charts.py
+
+# 6. Funnel analysis
+python src/build_funnel_analysis.py
+python src/create_funnel_charts.py
+
+# 7. Post-purchase loss analysis
+python src/build_post_purchase_analysis.py
+python src/create_post_purchase_charts.py
+
+# 8. Margin mix scenarios and growth lever scorecard
+#    (requires outputs from steps 5, 6, 7)
+python src/build_margin_mix_scenarios.py
+
+# 9. A/B experiment designs
+#    (requires outputs from steps 5, 6, 7, 8)
+python src/build_experiment_recommendations.py
+
+# 10. Unit economics waterfall chart
+#     (requires outputs from steps 7, 8)
+python src/create_unit_economics_waterfall.py
+```
+
+All chart outputs write to `outputs/figures/`. All intermediate CSV outputs write to `outputs/tables/` (git-ignored; local only).
 
 ---
 
@@ -69,7 +125,7 @@ Only 37.7% of customers make more than one purchase. The majority of revenue com
 ![Buyer Repeat Split](outputs/figures/buyer_repeat_split.png)
 
 **Order Status Distribution**
-~10% of orders are returned and ~15% are cancelled — a combined ~25% loss rate that directly compresses net revenue and margin.
+~10% of orders are returned and ~15% are cancelled — a combined ~25% loss rate that directly compresses net revenue and margin. "Shipped" and "Processing" orders represent in-flight orders at the time of the dataset snapshot.
 
 ![Order Status](outputs/figures/order_status_distribution.png)
 
@@ -101,7 +157,98 @@ Summary of how the 26 categories distribute across strategic roles based on reve
 
 ---
 
-## Key Findings So Far
+### Phase 3 — Funnel Analysis
+
+Session-level conversion analysis across all five traffic sources using the `events` table.
+
+> **Data caveat:** Every session in this dataset contains at least one product-page view event. As a result, the browse-to-cart rate measures conversion among sessions that already reached a product page — it is not a true top-of-funnel drop-off rate. The cart-to-purchase rate is unaffected by this limitation.
+
+**Funnel Stage Volumes by Traffic Source**
+Email is the largest traffic source by session volume. All five channels (Email, Adwords, YouTube, Facebook, Organic) follow a similar funnel shape.
+
+![Funnel Volumes](outputs/figures/funnel_stage_volumes_by_source.png)
+
+**Conversion Rates by Traffic Source**
+Browse-to-cart (~63%) and cart-to-purchase (~42%) rates are flat across all five channels. There is no channel-specific conversion problem — funnel performance is uniform platform-wide.
+
+![Conversion Rates](outputs/figures/conversion_rates_by_source.png)
+
+**Overall Purchase Funnel — Session Drop-Off**
+Of 681,667 total sessions, 432,099 (63%) added to cart. Of those, only 181,667 (42%) completed a purchase. The 58% cart abandonment rate is the primary conversion leak.
+
+![Funnel Waterfall](outputs/figures/funnel_overall_waterfall.png)
+
+---
+
+### Phase 4 — Post-Purchase Loss Analysis
+
+Cancellation and return rates analyzed by category, order value, customer type, and distribution center.
+
+**Gross Revenue Breakdown**
+Of $10.86M gross revenue, $1.63M (15.0%) was lost to cancellations and $1.07M (9.9%) to returns — a combined $2.7M post-purchase revenue loss.
+
+![Revenue Loss Breakdown](outputs/figures/post_purchase_revenue_loss_breakdown.png)
+
+**Post-Purchase Loss Rates by Category**
+Cancellation (13.8%–15.9%) and return (8.1%–11.3%) rates are nearly identical across all 26 categories. There is no category lever to pull — this is a platform-wide structural problem.
+
+![Rates by Category](outputs/figures/post_purchase_rates_by_category.png)
+
+**Post-Purchase Loss Rates by Order Value**
+Loss rates are flat across all order value bands (< $50 through $200+). High-value orders cancel and return at the same rate as low-value orders.
+
+![Loss by Order Value](outputs/figures/post_purchase_loss_by_order_value.png)
+
+Additional cuts (not charted) confirm: new and repeat customers cancel and return at identical rates (~15% / ~10%), and all 10 distribution centers show uniform delivery timing and loss rates.
+
+---
+
+### Phase 5 — Margin Mix Scenario Analysis
+
+Scenario modeling of five growth levers: margin mix shift, cart-to-purchase conversion, repeat purchase improvement, cancellation reduction, and return reduction. All impact figures are cumulative over the full 2019–2026 dataset period; annualized figures divide by 7.4 years.
+
+| Lever | Scenario | Annualized Margin Upside | Math Confidence | Execution Confidence |
+|---|---|---|---|---|
+| Cart-to-purchase +1pp | +1pp conversion rate | ~$14K/yr | High | Medium |
+| Cart-to-purchase +5pp | +5pp conversion rate | ~$68K/yr | High | Low |
+| Repeat orders +5% | +5% more repeat purchases | ~$10K/yr | Medium | Medium |
+| Repeat orders +10% | +10% more repeat purchases | ~$21K/yr | Medium | Low |
+| Cancellation rate −1pp | Recover 1pp of cancelled items | ~$8K/yr | High | Low |
+| Return rate −1pp | Recover 1pp of returned items | ~$8K/yr | High | Low |
+| Margin mix shift 10% | Shift 10% of low-margin to high-margin | ~$5K/yr | Medium | Low |
+
+The full scorecard with assumption notes and feasibility ratings is in `outputs/tables/growth_lever_scorecard.csv`.
+
+---
+
+### Phase 6 — A/B Test Design
+
+Four experiment designs grounded in the growth lever scorecard, each with hypothesis, target segment, control/treatment definition, primary metric, guardrail metrics, upside estimate, and risk caveats.
+
+| ID | Experiment | Lever | Annualized Upside | Launch Priority |
+|---|---|---|---|---|
+| EXP-001 | Cart abandonment recovery email | Conversion | ~$14K/yr | 1st |
+| EXP-002 | One-time buyer reactivation campaign | Retention | ~$10K/yr | 2nd |
+| EXP-004 | Cancellation reason capture (Phase A instrumentation) | Post-purchase | ~$8K/yr (Phase B) | 3rd |
+| EXP-003 | High-margin category merchandising test | Product mix | ~$456/yr | 4th |
+
+EXP-004 is instrumentation-first: the cancellation rate is flat across all segments, meaning the root cause is unknown. Phase A (add a reason-selection step to the cancel flow) must precede any intervention design.
+
+Full experiment designs are in `outputs/tables/experiment_designs.csv`. Metric definitions (4 primary, 9 guardrail) are in `outputs/tables/experiment_metric_definitions.csv`.
+
+---
+
+### Unit Economics Waterfall
+
+Single executive visual tracing $10.86M gross revenue to $4.23M estimated net margin.
+
+Product cost is estimated using the platform blended margin rate of 51.9% (weighted average derived from actual product cost data across all 26 categories).
+
+![Unit Economics Waterfall](outputs/figures/unit_economics_waterfall.png)
+
+---
+
+## Key Findings
 
 | Finding | Implication |
 |---------|-------------|
@@ -111,26 +258,39 @@ Summary of how the 26 categories distribute across strategic roles based on reve
 | Jeans: #2 in revenue ($949K) but 5+ points below average margin | Largest single margin leak in the catalog |
 | Blazers & Jackets: highest margin % (62%) but underscaled | Scaling this category would improve the overall margin mix |
 | Socks / Underwear: 61–74% of LTV comes post-first-order | Most durable categories, but absolute LTV is low ($24–35) |
+| 58% cart abandonment rate; flat across all 5 traffic channels | Cart-to-purchase conversion is the highest-ROI lever; channel mix does not explain the drop-off |
+| Post-purchase loss rates flat across all 26 categories, all order value bands, new vs. repeat customers, and all 10 distribution centers | No targetable segment or category lever — this requires a root-cause investigation (reason capture), not a targeted intervention |
+| Cart-to-purchase +1pp = ~$14K/yr annualized margin upside; +5pp = ~$68K/yr | Highest-confidence, highest-feasibility growth lever |
+| Pure margin mix shift has limited upside: 10% shift = ~$5K/yr | Fashion demand is category-sticky; a mix-shift test is a learning experiment, not a margin program |
+| Gross revenue of $10.86M → $4.23M estimated net margin (39% of gross) | Cancellations + returns + product cost consume 61% of gross revenue |
 
 ---
 
 ## Repository Structure
 
 ```
-├── sql/                     # Reference SQL (BigQuery syntax)
-├── src/                     # Python scripts for analysis and charts
-│   ├── clean_raw_csv_encoding.py
-│   ├── validate_raw_data.py
-│   ├── build_product_value_analysis.py
-│   └── create_product_value_charts.py
+├── sql/                            # Reference SQL (BigQuery syntax)
+│   └── 02_core_business_metrics.sql
+├── src/                            # Python scripts — analysis and charts
+│   ├── clean_raw_csv_encoding.py       # Decode raw BigQuery CSVs to clean UTF-8
+│   ├── validate_raw_data.py            # Validate processed files with DuckDB
+│   ├── create_core_metric_charts.py    # Core business metric charts (Phase 1)
+│   ├── build_product_value_analysis.py # Product / customer value queries (Phase 2)
+│   ├── create_product_value_charts.py  # Product value charts (Phase 2)
+│   ├── build_funnel_analysis.py        # Funnel / conversion queries (Phase 3)
+│   ├── create_funnel_charts.py         # Funnel charts (Phase 3)
+│   ├── build_post_purchase_analysis.py # Post-purchase loss queries (Phase 4)
+│   ├── create_post_purchase_charts.py  # Post-purchase charts (Phase 4)
+│   ├── build_margin_mix_scenarios.py   # Margin mix scenarios + growth lever scorecard (Phase 5)
+│   ├── build_experiment_recommendations.py  # A/B experiment designs (Phase 6)
+│   └── create_unit_economics_waterfall.py   # Unit economics waterfall chart
 ├── outputs/
-│   ├── tables/              # CSV outputs from each analysis
-│   └── figures/             # PNG charts
+│   ├── tables/              # CSV outputs from each analysis (git-ignored; local only)
+│   └── figures/             # PNG charts (committed)
 ├── reports/                 # Metric definitions and reference docs
 ├── PROJECT_PLAN.md          # Full project scope and phase definitions
 ├── PROJECT_STATE.md         # Living handoff doc — current status and next steps
 └── requirements.txt
 ```
 
-> `data/` is git-ignored. Raw and processed CSVs live locally only.
-
+> `data/` is git-ignored. Raw and processed CSVs live locally only. `outputs/tables/` is also git-ignored; only chart PNGs are committed.

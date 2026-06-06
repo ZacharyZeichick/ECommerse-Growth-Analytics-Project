@@ -99,7 +99,7 @@ ORDER BY
 # to margin leader categories (zero-sum: total net revenue unchanged).
 # Margin gain = shifted_revenue × (wtd_avg_margin_leader_pct − wtd_avg_low_margin_pct).
 # margin_uplift_pct_of_baseline = gain expressed as % of total baseline margin.
-SQL_SCENARIO_UPLIFT = """
+SQL_SCENARIO_UPLIFT = f"""
 WITH role_metrics AS (
     SELECT
         cr.strategic_role,
@@ -129,7 +129,7 @@ SELECT
     ROUND(lm.lm_revenue * s.shift_pct / 100.0
           * (hm.hm_pct - lm.lm_pct) / 100.0, 2)                                       AS estimated_margin_gain,
     ROUND((lm.lm_revenue * s.shift_pct / 100.0
-           * (hm.hm_pct - lm.lm_pct) / 100.0) / 7.4, 2)                              AS estimated_margin_gain_annualized,
+           * (hm.hm_pct - lm.lm_pct) / 100.0) / {DATASET_YEARS}, 2)                  AS estimated_margin_gain_annualized,
     'Full dataset period, 2019-2026'                                                   AS impact_period,
     ROUND(p.total_wtd_margin, 2)                                                       AS baseline_total_margin,
     ROUND(p.total_wtd_margin

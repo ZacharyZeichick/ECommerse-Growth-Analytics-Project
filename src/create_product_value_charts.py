@@ -128,19 +128,22 @@ def chart_lifetime_margin_vs_repeat() -> None:
         linewidths=0.5,
     )
 
+    # Mean reference lines — computed first so annotation offsets can use them
+    mean_rr = df["repeat_buyer_rate"].mean()
+    mean_lm = df["avg_lifetime_margin"].mean()
+
     for _, row in df.iterrows():
+        dx = 5 if row["repeat_buyer_rate"] >= mean_rr else -5
+        dy = 4 if row["avg_lifetime_margin"] >= mean_lm else -4
         ax.annotate(
             row["first_purchase_category"],
             xy=(row["repeat_buyer_rate"], row["avg_lifetime_margin"]),
-            xytext=(4, 3),
+            xytext=(dx, dy),
             textcoords="offset points",
-            fontsize=7.5,
+            fontsize=7,
             color="#374151",
+            ha="left" if dx > 0 else "right",
         )
-
-    # Mean reference lines
-    mean_rr = df["repeat_buyer_rate"].mean()
-    mean_lm = df["avg_lifetime_margin"].mean()
     ax.axvline(mean_rr, linestyle="--", color="#9CA3AF", linewidth=1, label=f"Mean repeat rate ({mean_rr:.1f}%)")
     ax.axhline(mean_lm, linestyle="--", color="#6B7280", linewidth=1, label=f"Mean lifetime margin (${mean_lm:.0f})")
 
@@ -214,15 +217,18 @@ def chart_revenue_margin_quadrant() -> None:
     ax.text(0.02, 0.02, "Niche",              ha="left",  **kw)
     ax.text(0.98, 0.02, "Low-margin volume",  ha="right", **kw)
 
-    # Category labels
+    # Category labels — offset direction based on quadrant to reduce overlap
     for _, row in df.iterrows():
+        dx = 6 if row["net_revenue"] >= avg_rev else -6
+        dy = 4 if row["estimated_net_margin_pct"] >= avg_margin else -4
         ax.annotate(
             row["category"],
             xy=(row["net_revenue"], row["estimated_net_margin_pct"]),
-            xytext=(5, 3),
+            xytext=(dx, dy),
             textcoords="offset points",
-            fontsize=7,
+            fontsize=6.5,
             color="#374151",
+            ha="left" if dx > 0 else "right",
         )
 
     # Format x-axis as $K / $M
