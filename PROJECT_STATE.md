@@ -1,15 +1,15 @@
 # Project State — E-Commerce Growth Analytics
 
 *Living handoff document. Update this file at the end of every working session.*
-*Last updated: 2026-06-05 (post-purchase loss analysis complete)*
+*Last updated: 2026-06-05 (margin mix scenario analysis complete)*
 
 ---
 
 ## Current Phase
 
-**Post-Purchase Loss Analysis — complete. Next: Margin Mix Scenario Analysis.**
+**Margin Mix Scenario Analysis — complete. Next: PROJECT_PROGRESS.md and A/B test recommendations.**
 
-Post-purchase loss is a platform-wide structural problem: ~15% cancellation rate and ~10% return rate are flat across all categories, order value bands, and customer types. No category or segment lever to pull.
+Growth lever scorecard completed across five lever types. Cart-to-purchase conversion is the highest-upside lever; margin mix shift has much smaller upside than expected.
 
 ---
 
@@ -74,6 +74,26 @@ The final narrative will follow the data — this hypothesis is a directional st
 - [x] Confirmed BigQuery sandbox access by successfully querying bigquery-public-data.thelook_ecommerce.orders and returning 125,408 orders.
 - [x] Configured Google Cloud CLI for project gen-lang-client-0200890233.
 - [x] Confirmed bq CLI access by querying bigquery-public-data.thelook_ecommerce.orders from terminal and returning 125,408 orders.
+
+---
+
+## Phase 6 — Margin Mix Scenario Analysis (Complete)
+
+- [x] `src/build_margin_mix_scenarios.py` created and committed — DuckDB + Python hybrid; reads data/processed/ and prior analysis CSVs; computes margin mix scenarios and cross-lever growth scorecard
+- [x] Four scenario CSVs generated in `outputs/tables/` (gitignored, local only)
+  - `margin_mix_opportunity.csv` — 26 rows, all categories with margin gap vs platform average
+  - `scenario_margin_uplift.csv` — 3 rows, modeled margin gain from 1%/5%/10% mix shift
+  - `growth_lever_scorecard.csv` — 11 rows, all levers ranked by impact × feasibility
+  - `recommended_experiments.csv` — 3 rows, highest-priority actionable experiments
+
+**Key findings:**
+- All impact figures are cumulative over the full 2019–2026 dataset period; annualized columns added for clearer interpretation
+- **Cart-to-purchase conversion** is the highest-upside lever: +5pp = **$503K cumulative / $68K annualized**; even +1pp = **$101K / $14K annualized**
+- **Margin mix shift** has smaller upside than expected: a 10% shift from low-margin to margin-leader categories yields only **$34K cumulative / $4.6K annualized** — fashion demand is category-sticky and the margin gap is only ~11pp
+- **Repeat purchase improvement** is a meaningful secondary lever: +10% more repeat orders = **$154K cumulative / $21K annualized**
+- **Post-purchase improvements** have measurable upside but execution confidence is Low — root causes of the 15% cancellation rate and 10% return rate are not captured in the dataset
+- Scorecard now separates **math confidence** (how well the arithmetic is supported by data) from **execution confidence** (how likely the scenario is achievable in practice)
+- Top 3 recommended experiments: cart abandonment email A/B test, one-time buyer re-engagement campaign, cancellation root cause investigation
 
 ---
 
@@ -181,9 +201,53 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## Next Actions
 
-1. Begin Margin Mix Scenario Analysis — model the revenue and margin impact of shifting category mix toward higher-margin categories
-2. New analysis scripts go in `src/` and query `data/processed/` — do not use BigQuery or PowerShell export scripts
-3. Outputs go to `outputs/tables/` (CSV) and `outputs/figures/` (PNG) as before
+1. Create `PROJECT_PROGRESS.md` — a human-readable summary of all phases, findings, and recommendations for portfolio readers
+2. Design A/B test recommendations — detailed experiment designs grounded in the scorecard findings
+3. Begin Final Review and Project Defense (see phase below)
+
+---
+
+## Final Phase — Final Review and Project Defense (Not Started)
+
+A structured three-pass audit before final GitHub polish. The goal is to stress-test the project as a portfolio artifact — catching overclaims, weak assumptions, and reproducibility gaps before a hiring manager or technical reviewer does.
+
+### Pass 1 — Defender Pass
+
+Make the strongest honest case for the project:
+- What does the project demonstrate clearly and well?
+- Which findings are tightly supported by the data?
+- Which scripts and outputs are clean, reproducible, and well-structured?
+- Where does the analysis go beyond surface-level observation?
+
+### Pass 2 — Critic Pass
+
+Challenge the project as a skeptical technical reviewer:
+- **Assumptions:** Which analytical assumptions are too strong, unverified, or likely wrong? (Time period not normalized to annual; mix shift assumes transferable demand; marginal session treated as average session; etc.)
+- **Overclaims:** Does any finding overstate certainty? Are any recommendations disconnected from what the data can actually support?
+- **Weak findings:** Are any conclusions flat, obvious, or trivially explained by dataset construction (e.g., the flat funnel finding — is it a real business insight or a dataset artifact)?
+- **Reproducibility gaps:** Can someone clone the repo and reproduce all outputs? Are `data/raw/` and `data/processed/` clearly documented as prerequisites? Are all script dependencies pinned?
+- **Chart quality:** Are all charts labeled clearly enough for a standalone portfolio? Are any misleading or hard to interpret without context?
+- **README gaps:** Does the README accurately describe what was found, not just what was built?
+
+### Pass 3 — Reconciliation Pass
+
+Produce a final punch list from Passes 1 and 2:
+- List specific files, claims, or charts that need changes
+- Distinguish: must-fix (correctness or major credibility issues) vs nice-to-fix (polish)
+- Execute fixes in order of priority
+- Final GitHub push with clean commit history
+
+### Scope of the audit
+
+| Area | What to check |
+|---|---|
+| `README.md` | Findings accurate, charts present, setup instructions complete |
+| `src/*.py` | Scripts run cleanly from repo root; no hardcoded paths; dependencies in `requirements.txt` |
+| `outputs/figures/` | All charts committed; labels readable; no misleading axes |
+| `outputs/tables/` | Key CSVs described in README; columns self-explanatory |
+| Assumptions | All scenario estimates clearly labeled as estimates, not measurements |
+| Recommendations | Each recommended experiment grounded in a specific data finding |
+| Time-period framing | All lever estimates clearly state they are cumulative over the dataset period, not annual |
 
 ---
 
