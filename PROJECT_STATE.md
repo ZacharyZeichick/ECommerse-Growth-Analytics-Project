@@ -218,9 +218,10 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## Next Actions
 
-1. Unit Economics Waterfall and RFM Customer Segmentation
-2. Create `PROJECT_PROGRESS.md` — a human-readable summary of all phases, findings, and recommendations for portfolio readers
-3. Begin Final Review and Project Defense (see phase below)
+1. Create `PROJECT_PROGRESS.md` — a human-readable summary of all phases, findings, and recommendations for portfolio readers
+2. Begin Final Review and Project Defense (see phase below)
+
+Optional upgrades are documented in the Future Enhancements section below — none are blockers for completing the current version.
 
 ---
 
@@ -265,6 +266,32 @@ Produce a final punch list from Passes 1 and 2:
 | Assumptions | All scenario estimates clearly labeled as estimates, not measurements |
 | Recommendations | Each recommended experiment grounded in a specific data finding |
 | Time-period framing | All lever estimates clearly state they are cumulative over the dataset period, not annual |
+
+---
+
+## Future Enhancements / Optional Upgrades
+
+These are potential additions after the core project is complete. None are required to finish the current version. Pursue only if time and scope allow after the Final Review pass.
+
+### Unit Economics Waterfall
+A single executive visual tracing gross revenue → post-purchase losses (cancellations + returns) → estimated product cost → net margin. Would make the project's core finding immediately legible to non-technical reviewers. Low implementation effort; high portfolio impact.
+
+### RFM Customer Segmentation
+A customer strategy layer using Recency, Frequency, and Monetary value to segment the buyer base into actionable cohorts (e.g., Champions, At-Risk, Lost). Complements the existing one-time buyer finding and the repeat-purchase experiment design. Medium implementation effort.
+
+### Tableau / Dashboard Layer
+An executive dashboard built on top of the existing analysis outputs, suitable for portfolio demonstration. Should be deferred until the analysis is fully stable and the Final Review pass is complete.
+
+### Predictive Targeting Layer (v2 only)
+Optional machine learning extensions for a second version of the project:
+- **Customer LTV prediction** — estimate lifetime value after first purchase using category, order value, and channel signals
+- **Cart abandonment propensity model** — score sessions by probability of abandonment to enable targeted intervention
+- **Repeat purchase probability model** — predict which one-time buyers are most likely to return
+
+These require feature engineering and model validation work beyond the current scope. Not recommended for v1.
+
+### Final Review and Project Defense
+Already planned (see phase above). Should remain the last step before any public presentation or final push. Not optional — this is the quality gate for the current version.
 
 ---
 
