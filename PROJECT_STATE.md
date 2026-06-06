@@ -1,15 +1,15 @@
 # Project State — E-Commerce Growth Analytics
 
 *Living handoff document. Update this file at the end of every working session.*
-*Last updated: 2026-06-05 (initial funnel analysis outputs)*
+*Last updated: 2026-06-05 (funnel charts created and committed)*
 
 ---
 
 ## Current Phase
 
-**Conversion / Funnel Analysis — in progress**
+**Conversion / Funnel Analysis — complete. Next: Post-Purchase Loss Analysis.**
 
-Initial output tables generated. Next step: create funnel charts and decide whether to investigate cart-to-purchase drop-off or post-purchase returns/cancellations deeper.
+Funnel charts created and committed. Key finding: session-purchase rate is flat across all traffic sources (~26.5%); cart-to-purchase drop-off (~58%) is the primary funnel leak.
 
 ---
 
@@ -87,7 +87,11 @@ The final narrative will follow the data — this hypothesis is a directional st
   - `event_type_distribution.csv` — 6 rows, event counts and % of total
   - `session_purchase_summary.csv` — 1 row, overall session purchase rate
   - `high_value_category_funnel.csv` — 2 rows, Revenue leader vs other session funnel comparison
-- [ ] Funnel charts not yet created
+- [x] `src/create_funnel_charts.py` created and committed
+- [x] Three funnel charts generated and committed in `outputs/figures/`
+  - `funnel_stage_volumes_by_source.png`
+  - `conversion_rates_by_source.png`
+  - `funnel_overall_waterfall.png`
 - [ ] Cart-to-purchase drop-off analysis not yet done
 - [ ] Post-purchase returns/cancellations analysis not yet done
 
@@ -161,10 +165,9 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## Next Actions
 
-1. Create funnel charts (`src/create_funnel_charts.py`) — visualize the flat-funnel finding across traffic sources and the cart-to-purchase drop-off
-2. Decide with ChatGPT framing whether to go deeper on cart-to-purchase abandonment or pivot to post-purchase returns/cancellations analysis
-3. New analysis scripts go in `src/` and query `data/processed/` — do not use BigQuery or PowerShell export scripts
-4. Outputs go to `outputs/tables/` (CSV) and `outputs/figures/` (PNG) as before
+1. Begin Post-Purchase Loss Analysis — investigate returns and cancellations as the next phase of growth leakage analysis
+2. New analysis scripts go in `src/` and query `data/processed/` — do not use BigQuery or PowerShell export scripts
+3. Outputs go to `outputs/tables/` (CSV) and `outputs/figures/` (PNG) as before
 
 ---
 
