@@ -1,15 +1,15 @@
 # Project State — E-Commerce Growth Analytics
 
 *Living handoff document. Update this file at the end of every working session.*
-*Last updated: 2026-06-05 (funnel charts created and committed)*
+*Last updated: 2026-06-05 (post-purchase loss analysis complete)*
 
 ---
 
 ## Current Phase
 
-**Conversion / Funnel Analysis — complete. Next: Post-Purchase Loss Analysis.**
+**Post-Purchase Loss Analysis — complete. Next: Margin Mix Scenario Analysis.**
 
-Funnel charts created and committed. Key finding: session-purchase rate is flat across all traffic sources (~26.5%); cart-to-purchase drop-off (~58%) is the primary funnel leak.
+Post-purchase loss is a platform-wide structural problem: ~15% cancellation rate and ~10% return rate are flat across all categories, order value bands, and customer types. No category or segment lever to pull.
 
 ---
 
@@ -77,29 +77,45 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ---
 
-## In-Progress Work
+## Phase 5 — Post-Purchase Loss Analysis (Complete)
 
-### Phase 4 — Conversion / Funnel Analysis (started)
+- [x] `src/build_post_purchase_analysis.py` created and committed — DuckDB queries against orders, order_items, products, inventory_items, distribution_centers
+- [x] Five post-purchase CSVs generated in `outputs/tables/` (gitignored, local only)
+  - `post_purchase_summary.csv` — 1 row, overall gross/net/cancelled/returned revenue and rates
+  - `post_purchase_by_category.csv` — 26 rows, loss rates and margin impact per product category
+  - `post_purchase_by_order_value.csv` — 4 rows, loss rates by order value band (< $50, $50–$99, $100–$199, $200+)
+  - `post_purchase_by_customer_type.csv` — 2 rows, new vs repeat customer loss rates
+  - `post_purchase_by_distribution_center.csv` — 10 rows, loss rates and delivery timing per DC
+- [x] `src/create_post_purchase_charts.py` created and committed
+- [x] Three post-purchase charts generated and committed in `outputs/figures/`
+  - `post_purchase_revenue_loss_breakdown.png`
+  - `post_purchase_rates_by_category.png`
+  - `post_purchase_loss_by_order_value.png`
 
-- [x] `src/build_funnel_analysis.py` created and committed — DuckDB queries against events, orders, order_items, products
-- [x] Four funnel output CSVs generated in `outputs/tables/` (gitignored, local only)
-  - `funnel_by_traffic_source.csv` — 5 rows, session funnel metrics by traffic source
-  - `event_type_distribution.csv` — 6 rows, event counts and % of total
-  - `session_purchase_summary.csv` — 1 row, overall session purchase rate
-  - `high_value_category_funnel.csv` — 2 rows, Revenue leader vs other session funnel comparison
+**Key findings:**
+- Overall: **15.0% cancellation rate**, **9.9% return rate** — ~25% of all items lost post-purchase; **~$1.4M estimated margin impact**
+- Loss rates are **flat across all 26 categories** (cancellation range: 13.8%–15.9%, return range: 8.1%–11.3%) — no category lever to pull
+- Loss rates are **flat across all order value bands** — high-value orders cancel and return at the same rate as low-value orders
+- Loss rates are **nearly identical for new vs repeat customers** (~15% cancel, ~10% return each) — not a new-customer onboarding problem
+- Delivery timing is uniform across all 10 distribution centers (~0.5 days to ship, 2.5 days to deliver) — no DC outlier
+- Post-purchase loss is a **platform-wide structural problem**, not a targetable segment or category issue
+
+---
+
+## Phase 4 — Conversion / Funnel Analysis (Complete)
+
+- [x] `src/build_funnel_analysis.py` created and committed
+- [x] Four funnel output CSVs generated in `outputs/tables/`
 - [x] `src/create_funnel_charts.py` created and committed
 - [x] Three funnel charts generated and committed in `outputs/figures/`
   - `funnel_stage_volumes_by_source.png`
   - `conversion_rates_by_source.png`
   - `funnel_overall_waterfall.png`
-- [ ] Cart-to-purchase drop-off analysis not yet done
-- [ ] Post-purchase returns/cancellations analysis not yet done
 
-**Key findings so far:**
-- Session purchase rate: **26.4%–27.0%** across all five traffic sources — conversion rates are nearly identical regardless of channel
-- Revenue leader category sessions convert at **26.59%**, essentially the same as other sessions at **26.68%** — high-value categories generate more margin through purchase price, not through better conversion
-- Cart-to-purchase rate is ~**42%** across all sources — the cart-to-purchase drop-off (~58%) is the most significant funnel leak
-- **Data caveat:** every session in the events table contains at least one product-page event, so `browse_sessions = total_sessions` for all sources. The browse-to-cart metric reflects cart eligibility rather than true top-of-funnel drop-off. Meaningful funnel is: sessions → cart → purchase.
+**Key findings:**
+- Session purchase rate: **26.4%–27.0%** across all five traffic sources — flat regardless of channel
+- Cart-to-purchase rate is ~**42%** — the drop-off (~58%) is the most significant funnel leak
+- **Data caveat:** every session contains at least one product event, so browse-to-cart reflects cart eligibility, not true top-of-funnel drop-off
 
 ---
 
@@ -165,7 +181,7 @@ The final narrative will follow the data — this hypothesis is a directional st
 
 ## Next Actions
 
-1. Begin Post-Purchase Loss Analysis — investigate returns and cancellations as the next phase of growth leakage analysis
+1. Begin Margin Mix Scenario Analysis — model the revenue and margin impact of shifting category mix toward higher-margin categories
 2. New analysis scripts go in `src/` and query `data/processed/` — do not use BigQuery or PowerShell export scripts
 3. Outputs go to `outputs/tables/` (CSV) and `outputs/figures/` (PNG) as before
 
