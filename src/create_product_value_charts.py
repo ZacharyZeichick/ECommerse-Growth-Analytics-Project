@@ -103,7 +103,7 @@ def chart_first_vs_post() -> None:
 
     plt.tight_layout()
     out = FIGURES_DIR / "first_vs_post_first_order_margin.png"
-    fig.savefig(out, dpi=150, bbox_inches="tight")
+    fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: {out.name}")
 
@@ -144,7 +144,7 @@ def chart_lifetime_margin_vs_repeat() -> None:
             color="#374151",
             ha="left" if dx > 0 else "right",
         )
-    ax.axvline(mean_rr, linestyle="--", color="#9CA3AF", linewidth=1, label=f"Mean repeat rate ({mean_rr:.1f}%)")
+    ax.axvline(mean_rr, linestyle="--", color="#9CA3AF", linewidth=1, label=f"Mean category repeat rate ({mean_rr:.1f}%)")
     ax.axhline(mean_lm, linestyle="--", color="#6B7280", linewidth=1, label=f"Mean lifetime margin (${mean_lm:.0f})")
 
     # Expand x-axis so compressed repeat-rate range is readable
@@ -162,7 +162,7 @@ def chart_lifetime_margin_vs_repeat() -> None:
 
     plt.tight_layout()
     out = FIGURES_DIR / "lifetime_margin_vs_repeat_rate.png"
-    fig.savefig(out, dpi=150, bbox_inches="tight")
+    fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: {out.name}")
 
@@ -249,7 +249,7 @@ def chart_revenue_margin_quadrant() -> None:
 
     plt.tight_layout()
     out = FIGURES_DIR / "revenue_margin_quadrant.png"
-    fig.savefig(out, dpi=150, bbox_inches="tight")
+    fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: {out.name}")
 
@@ -297,7 +297,7 @@ def chart_strategic_role_counts() -> None:
 
     plt.tight_layout()
     out = FIGURES_DIR / "strategic_role_counts.png"
-    fig.savefig(out, dpi=150, bbox_inches="tight")
+    fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: {out.name}")
 

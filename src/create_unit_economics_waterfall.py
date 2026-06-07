@@ -173,7 +173,7 @@ def main() -> None:
 
     plt.tight_layout(rect=[0, 0.03, 1, 1])
     out = FIGURES_DIR / "unit_economics_waterfall.png"
-    fig.savefig(out, dpi=150, bbox_inches="tight")
+    fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"  Saved: {out.name}")
     print("\nDone.")

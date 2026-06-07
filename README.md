@@ -67,6 +67,8 @@ python src/validate_raw_data.py
 #      overall_business_summary.csv, monthly_business_metrics.csv,
 #      category_business_metrics.csv, customer_purchase_summary.csv,
 #      order_status_rates.csv
+#    Column names must match those defined in sql/02_core_business_metrics.sql exactly;
+#    BigQuery exports may need to be renamed if headers are auto-formatted on download.
 python src/create_core_metric_charts.py
 
 # 5. Product / customer value analysis
@@ -294,3 +296,5 @@ Product cost is estimated using the platform blended margin rate of 51.9% (weigh
 ```
 
 > `data/` is git-ignored. Raw and processed CSVs live locally only. `outputs/tables/` is also git-ignored; only chart PNGs are committed.
+
+See [`reports/metric_definitions.md`](reports/metric_definitions.md) for definitions of all computed metrics and the revenue conventions (gross vs. net, estimated margin) used across analyses.

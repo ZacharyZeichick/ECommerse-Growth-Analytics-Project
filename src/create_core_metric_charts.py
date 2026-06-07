@@ -29,7 +29,7 @@ df_monthly = df_monthly[df_monthly["order_month"].dt.strftime("%Y-%m") != "2026-
 fig, ax = plt.subplots(figsize=(12, 5))
 ax.plot(df_monthly["order_month"], df_monthly["gross_revenue"], label="Gross Revenue", linewidth=1.5)
 ax.plot(df_monthly["order_month"], df_monthly["net_revenue"], label="Net Revenue", linewidth=1.5)
-ax.set_title("Monthly Gross vs. Net Revenue (2019–2026)", fontsize=14, pad=12)
+ax.set_title("Monthly Gross vs. Net Revenue (2019–May 2026)", fontsize=14, pad=12)
 ax.set_xlabel("Month")
 ax.set_ylabel("Revenue")
 ax.yaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"${x / 1_000:.0f}K"))
