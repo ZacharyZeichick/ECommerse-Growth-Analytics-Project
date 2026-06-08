@@ -1,0 +1,6 @@
+kpi_name,kpi_value,formatted_value,sort_order,dashboard_tab
+Gross Revenue,10863615.15,$10.86M,1,Executive Overview
+Est. Net Margin,4232848.63,$4.23M,2,Executive Overview
+Combined Loss Rate,24.9,24.9%,3,Executive Overview
+Total Orders,125279,"125,279",4,Executive Overview
+Total Buyers,80060,"80,060",5,Executive Overview

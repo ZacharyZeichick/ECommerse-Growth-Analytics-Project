@@ -1,0 +1,12 @@
+priority_rank,lever,lever_type,scenario,estimated_margin_uplift_annualized,math_confidence,execution_confidence,feasibility_rating,notes
+1,Cart to purchase rate +5pp,Conversion,+5pp cart-to-purchase rate,68026.52,High,Low,Medium,Requires systematic checkout optimization across all sources
+2,Repeat orders +10%,Retention,+10% more repeat purchase orders,20768.05,Medium,Low,Medium,Sustained retention program needed beyond single campaign
+3,Cart to purchase rate +1pp,Conversion,+1pp cart-to-purchase rate,13605.3,High,Medium,High,Directly measurable; checkout UX or cart-reminder email A/B test
+4,Repeat orders +5%,Retention,+5% more repeat purchase orders,10384.02,Medium,Medium,High,Email/loyalty re-engagement for 1-time buyers; well-proven playbook
+5,Cancellation rate -3pp,Post-purchase,Recover 3pp worth of cancelled items,22912.5,Medium,Low,Low,Structural change needed; root cause likely multi-factor
+6,Return rate -3pp,Post-purchase,Recover 3pp worth of returned items,22822.41,Medium,Low,Low,Requires product quality improvements and deeper UX changes
+7,Cancellation rate -1pp,Post-purchase,Recover 1pp worth of cancelled items,7637.5,High,Low,Medium,Root cause varies; intervention design requires cancellation reason data
+8,Return rate -1pp,Post-purchase,Recover 1pp worth of returned items,7607.47,High,Low,Medium,Better product descriptions and sizing guidance; testable by category
+9,Margin mix shift 10%,Mix shift,10% of low-margin rev to margin leaders,4558.03,Medium,Low,Low,"Major repositioning; multi-quarter initiative, high execution risk"
+10,Margin mix shift 5%,Mix shift,5% of low-margin rev to margin leaders,2279.01,Medium,Low,Low,Significant demand shift; needs sustained merchandising and acquisition changes
+11,Margin mix shift 1%,Mix shift,1% of low-margin rev to margin leaders,455.8,Medium,Low,Medium,Modest demand shift via merchandising; requires A/B test to validate revenue transfer

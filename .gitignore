@@ -29,8 +29,10 @@ data/
 
 # Outputs — exclude large/generated files
 outputs/tableau/*.hyper
-outputs/tableau/*.csv
 outputs/tableau/*.tde
+
+# Tableau-ready export CSVs are committed (small, curated portfolio assets)
+!outputs/tableau/*.csv
 
 # Tableau
 *.twbx

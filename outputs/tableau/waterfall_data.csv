@@ -1,0 +1,7 @@
+stage_label,stage_order,bar_value,running_start,bar_type,formatted_label
+Gross Revenue,1,10863615.15,0,total,$10.86M
+Cancellations,2,-1634621.86,10863615.15,decrease,-$1.63M
+Returns,3,-1073392.46,9228993.29,decrease,-$1.07M
+Net Revenue,4,8155600.83,0,subtotal,$8.16M
+Est. Product Cost,5,-3922752.2,8155600.83,decrease,-$3.92M
+Net Margin,6,4232848.63,0,total,$4.23M

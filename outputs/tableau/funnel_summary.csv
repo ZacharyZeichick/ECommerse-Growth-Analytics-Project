@@ -1,0 +1,4 @@
+funnel_stage,stage_order,session_count,pct_of_previous,drop_label
+Total Sessions,1,681667,,
+Added to Cart,2,432099,63.4,63.4% of sessions added to cart
+Completed Purchase,3,181667,42.0,42.0% of cart sessions purchased - 58.0% abandoned
